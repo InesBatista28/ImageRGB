@@ -294,6 +294,8 @@ Image ImageCopy(const Image img) {
     // Copia o tuplo RGB
     new_img->LUT[i] = img->LUT[i]; 
   }
+
+
   new_img->num_colors=img->num_colors;
 
   //3.Copiar a matriz de índices de pixeis (deep copy por linha)
@@ -303,7 +305,7 @@ Image ImageCopy(const Image img) {
     new_img->image[i] = AllocateRowArray(img->width);
 
     //Copiar o conteúdo da linha da píxeis original (unit16)
-    for(uint32 j=0; j<img->width;i++) {
+    for(uint32 j=0; j<img->width;j++) {
       //Cópia do índice de cor de pixel
       new_img->image[i][j] = img->image[i][j];
     }
