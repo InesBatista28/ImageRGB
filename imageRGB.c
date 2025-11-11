@@ -11,12 +11,12 @@
 /// 2025
 
 // Student authors (fill in below):
-// NMec:
-// Name:
-// NMec:
-// Name:
+// NMec: 124877
+// Name: Inês Batista
+// NMec: 124996
+// Name: Maria Quinteiro
 //
-// Date:
+// Date: 11/11/2025
 //
 
 #include "imageRGB.h"
@@ -284,10 +284,33 @@ void ImageDestroy(Image* imgp) {
 Image ImageCopy(const Image img) {
   assert(img != NULL);
 
-  // TO BE COMPLETED
-  // ...
+  //1. Alocar a estrutura principal e os arrays de ponteiros(Header)
+  //Reutiliza a função que aloca a estrutura, array de ponteiros e a LUT.
+  Image new_img = AllocateImageHeader(img->width, img->height);
 
-  return NULL;
+  //2. Copiar a LUT e o número de cores utilizadas
+  //Usamos um loop de atribuição para evitar problemas com a chamada memcpy.
+  for (uint16 i = 0; i < img->num_colors; i++) {
+    // Copia o tuplo RGB
+    new_img->LUT[i] = img->LUT[i]; 
+  }
+  new_img->num_colors=img->num_colors;
+
+  //3.Copiar a matriz de índices de pixeis (deep copy por linha)
+  for(uint32 i=0; i<img->height;i++) {
+    //Alocar memória para uma nova linha de pixeis 
+    //AlocateRowArray garante a alocação segura
+    new_img->image[i] = AllocateRowArray(img->width);
+
+    //Copiar o conteúdo da linha da píxeis original (unit16)
+    for(uint32 j=0; j<img->width;i++) {
+      //Cópia do índice de cor de pixel
+      new_img->image[i][j] = img->image[i][j];
+    }
+
+  }
+
+  return new_img;
 }
 
 /// Printing on the console
@@ -556,10 +579,34 @@ int ImageIsEqual(const Image img1, const Image img2) {
   assert(img1 != NULL);
   assert(img2 != NULL);
 
-  // TO BE COMPLETED
-  // ...
+  //1.Verificar dimensões.Se forem diferentes, as imagens não são iguais.
+  if(img1->width != img2->width || img1->height != img2->height) {
+    return 0;
+  }
 
-  return 0;
+  //2.Iterar sobre todos os pixeis e comparar a cor RGB
+  for(uint32 i=0;i<img1->height;i++) {
+    for(uint32 j=0;j<img1->width;j++) {
+      //Obter os índices de cor da matriz de pixeis de ambas as imagens
+      uint16 label1=img1->image[i][j];
+      uint16 label2=img2->image[i][j];
+
+      //2 acessos à matriz de pixeis para img1 e img2
+      PIXMEM+=2;
+
+      //Obter os valores de rgb reais das respetivas LUT
+      rgb_t color1 = img1->LUT[label1];
+      rgb_t color2 = img2->LUT[label2];
+
+      //Comparar os valores de rgb, se a cor for diferente, então as imagens não são iguais
+      if (color1 != color2) {
+        return 0; // Não são iguais
+      }
+    }
+  }
+
+  //SE AS DIMENSÕES E AS CORES DE TODOS OS PIXEIS COICIDIREM, AS IMAGENS SÃO IGUAIS 
+  return 1;
 }
 
 int ImageIsDifferent(const Image img1, const Image img2) {
