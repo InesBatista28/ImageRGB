@@ -635,10 +635,38 @@ int ImageIsDifferent(const Image img1, const Image img2) {
 Image ImageRotate90CW(const Image img) {
   assert(img != NULL);
 
-  // TO BE COMPLETED
-  // ...
+  uint32 original_W = img->width;
+  uint32 original_H = img->height;
 
-  return NULL;
+// A nova imagem terá (H x W)
+  uint32 new_W = original_H;
+  uint32 new_H = original_W;
+
+// A função ImageCreate aloca o cabeçalho, a LUT e os arrays de pixels.
+  Image new_img = ImageCreate(new_W, new_H);
+
+//Copiar a LUT completa para garantir que todas as cores são mapeadas corretamente.
+  for (uint16 i = 0; i < img->num_colors; i++) {
+    new_img->LUT[i] = img->LUT[i];
+  }
+  new_img->num_colors = img->num_colors;
+
+  // Mapeamento: u' = v  ;  v' = W - 1 - u
+  for (uint32 v = 0; v < original_H; v++) {       // Linhas (v) da imagem original  
+    for (uint32 u = 0; u < original_W; u++) {   // Colunas (u) da imagem original
+
+// Coordenadas na nova imagem
+      uint32 u_prime = v; 
+      uint32 v_prime = original_W - 1 - u;
+
+// Copiar o índice de cor (pixel label)
+      new_img->image[v_prime][u_prime] = img->image[v][u];
+
+// Contabilizar 2 acessos à memória (1 leitura na original + 1 escrita na nova)
+      PIXMEM += 2;
+      }
+  }
+  return new_img;
 }
 
 /// Rotate 180 degrees clockwise (CW).
@@ -650,10 +678,33 @@ Image ImageRotate90CW(const Image img) {
 Image ImageRotate180CW(const Image img) {
   assert(img != NULL);
 
-  // TO BE COMPLETED
-  // ...
+  uint32 original_W = img->width;
+  uint32 original_H = img->height;
 
-  return NULL;
+  // A rotação de 180 graus mantém as dimensões (W x H)
+  uint32 new_W = original_W;
+  uint32 new_H = original_H;
+
+  Image new_img = ImageCreate(new_W, new_H);
+
+  // 2. Copiar a LUT e o número de cores
+  for (uint16 i = 0; i < img->num_colors; i++) {
+    new_img->LUT[i] = img->LUT[i];
+  }
+  new_img->num_colors = img->num_colors;
+
+  for (uint32 v = 0; v < original_H; v++) {      
+    for (uint32 u = 0; u < original_W; u++) {    
+
+      uint32 u_prime = original_W - 1 - u; 
+      uint32 v_prime = original_H - 1 - v;
+
+      new_img->image[v_prime][u_prime] = img->image[v][u];
+
+      PIXMEM += 2; 
+    }
+  }
+  return new_img;
 }
 
 /// Check whether pixel coords (u, v) are inside img.
