@@ -12,11 +12,11 @@ Maria Quinteiro, 124996
 
 ## Project Goals
 
-- Implement the **imageRGB ADT**, supporting:
+- Implement the imageRGB ADT, supporting:
   - Creation, copying, and destruction of images
   - Pixel manipulation using a 2D array of color indices
   - Mapping of indices to actual RGB values via a Look-Up Table (LUT)
-  - Loading and saving images in **PBM (P4)** and **PPM (P3)** formats
+  - Loading and saving images in PBM (P4) and PPM (P3) formats
 
 - Develop and analyze algorithms for:
   - Image comparison
@@ -35,7 +35,7 @@ Each image is represented by:
 - `LUT` — a Look-Up Table storing actual RGB triplets  
 - `num_colors` — number of active colors
 
-This architecture separates **geometry** from **color information**, which:
+This architecture separates geometry from color information, which:
 - saves memory (especially for repeated colors),
 - improves data locality,
 - allows efficient comparisons and transformations.
