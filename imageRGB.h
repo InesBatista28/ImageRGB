@@ -203,4 +203,7 @@ typedef int (*FillingFunction)(Image img, int u, int v, uint16 label);
 /// Returns the number of image regions found.
 int ImageSegmentation(Image img, FillingFunction fillFunct);
 
+/// Test helper to set a pixel, used by imageRGBTest.c
+void ImageTestSetPixel(Image img, uint32 u, uint32 v, uint16 label);
+
 #endif

@@ -709,8 +709,15 @@ int ImageIsValidPixel(const Image img, int u, int v) {
 /// Each function carries out a different version of the algorithm.
 
 /// Region growing using the recursive flood-filling algorithm.
-/// === Helper function for recursive flood fill ===
-static int fill(Image img, int u, int v, uint16 old, uint16 label) {
+int ImageRegionFillingRecursive(Image img, int u, int v, uint16 label) {
+  assert(img != NULL);
+  assert(ImageIsValidPixel(img, u, v));
+
+  uint16 old = img->image[v][u];
+  if (old == label) return 0;
+
+  // Internal helper
+  int fill(Image img, int u, int v, uint16 old, uint16 label); {
     if (!ImageIsValidPixel(img, u, v)) return 0;
     if (img->image[v][u] != old) return 0;
 
@@ -718,22 +725,15 @@ static int fill(Image img, int u, int v, uint16 old, uint16 label) {
     PIXMEM += 2;
 
     return 1
-        + fill(img, u + 1, v, old, label)
-        + fill(img, u - 1, v, old, label)
-        + fill(img, u, v + 1, old, label)
-        + fill(img, u, v - 1, old, label);
+      + fill(img, u+1, v, old, label)
+      + fill(img, u-1, v, old, label)
+      + fill(img, u, v+1, old, label)
+      + fill(img, u, v-1, old, label);
+  }
+
+  return fill(img, u, v, old, label);
 }
 
-/// Region growing using the recursive flood-filling algorithm.
-int ImageRegionFillingRecursive(Image img, int u, int v, uint16 label) {
-    assert(img != NULL);
-    assert(ImageIsValidPixel(img, u, v));
-
-    uint16 old = img->image[v][u];
-    if (old == label) return 0;
-
-    return fill(img, u, v, old, label);
-}
 
 /// Region growing using a STACK of pixel coordinates to
 /// implement the flood-filling algorithm.
