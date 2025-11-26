@@ -1,41 +1,58 @@
 # The imageRGB ADT
-**Date:** 2025-11-15
+**Date:** 2025-11-26  
+**Course:** Algorithms and Data Structures
 
-This project was developed for the course Algorithms and Data Structures.  
-Its main goal is to implement and analyze an **Abstract Data Type (ADT)** for representing and manipulating RGB images, along with functions for comparison, geometric transformations, and region-based segmentation.
-
-The full project report is available here: [Project Report](./report.pdf)
+This project implements and analyzes an **Abstract Data Type (ADT)** for RGB image processing, featuring advanced algorithms for image comparison, geometric transformations, and region-based segmentation.
+The complete project report with detailed analysis, experimental results, and implementation details is available here: [**report**](./report.pdf)
 
 ## Authors
-Inês Batista, 124877<br>
-Maria Quinteiro, 124996
+- Inês Batista (124877)
+- Maria Quinteiro (124996)
 
 ## Project Goals
 
-- Implement the imageRGB ADT, supporting:
-  - Creation, copying, and destruction of images
-  - Pixel manipulation using a 2D array of color indices
-  - Mapping of indices to actual RGB values via a Look-Up Table (LUT)
-  - Loading and saving images in PBM (P4) and PPM (P3) formats
+### Implementation
+- Complete the imageRGB ADT supporting image creation, copying, and destruction
+- Implement pixel manipulation using 2D array with LUT architecture
+- Support PBM (P4) and PPM (P3) file formats
 
-- Develop and analyze algorithms for:
-  - Image comparison
-  - Geometric transformations (90° and 180° rotations)
-  - Region Growing (Flood Fill) using three different strategies
+### Algorithm Development
+- Image comparison with early termination optimization
+- Geometric transformations (90° and 180° rotations)
+- Three Region Growing strategies using Flood Fill algorithm
 
-- Use an instrumentation module to measure:
-  - Number of pixel memory accesses (PIXMEM counter)
-  - Time and resource consumption of different approaches
+### Performance Analysis
+- Instrumentation via PIXMEM counter for memory access measurement
+- Empirical validation of computational complexity models
+- Comparative analysis of different algorithm strategies
 
-## Internal Structure of the imageRGB ADT
 
-Each image is represented by:
-- `width`, `height` — image dimensions  
-- `image` — a 2D array storing indices into the LUT  
-- `LUT` — a Look-Up Table storing actual RGB triplets  
-- `num_colors` — number of active colors
+## Key Algorithms
 
-This architecture separates geometry from color information, which:
-- saves memory (especially for repeated colors),
-- improves data locality,
-- allows efficient comparisons and transformations.
+### Image Comparison (`ImageIsEqual`)
+- **Strategy:** Early termination on first difference detection
+- **Complexity:** Best case Ω(1), Worst case O(w×h)
+- **Instrumentation:** PIXMEM counts pixel memory accesses
+
+### Geometric Transformations
+- `ImageRotate90CW` - 90° clockwise rotation
+- `ImageRotate180CW` - 180° rotation
+- **Complexity:** O(w×h) for all transformations
+
+### Region Growing (Flood Fill)
+Three implemented strategies:
+
+1. **Recursive Approach**
+   - Simple implementation with depth-first search
+   - Risk of stack overflow for large regions
+   - Best for small images and prototyping
+
+2. **Queue-based (BFS)**
+   - Uses PixelCoordsQueue for breadth-first search
+   - Uniform, isotropic region growth
+   - Most robust for large regions (>1M pixels)
+
+3. **Stack-based (DFS)** 
+   - Uses PixelCoordsStack for depth-first search
+   - Memory-efficient for thin structures
+   - Preferred for memory-constrained systems
