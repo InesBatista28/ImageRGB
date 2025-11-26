@@ -2,12 +2,12 @@
 **Date:** 2025-11-26  
 **Course:** Algorithms and Data Structures
 
-This project implements and analyzes an **Abstract Data Type (ADT)** for RGB image processing, featuring advanced algorithms for image comparison, geometric transformations, and region-based segmentation.
+This project implements and analyzes an **Abstract Data Type (ADT)** for RGB image processing, featuring advanced algorithms for image comparison, geometric transformations, and region-based segmentation.<br>
 The complete project report with detailed analysis, experimental results, and implementation details is available here: [**report**](./report.pdf)
 
 ## Authors
-- Inês Batista (124877)
-- Maria Quinteiro (124996)
+- Inês Batista, 124877
+- Maria Quinteiro, 124996
 
 ## Project Goals
 
