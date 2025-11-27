@@ -1,31 +1,12 @@
 # The imageRGB ADT
 **Date:** 2025-11-26  
-**Course:** Algorithms and Data Structures
 
-This project implements and analyzes an **Abstract Data Type (ADT)** for RGB image processing, featuring advanced algorithms for image comparison, geometric transformations, and region-based segmentation.<br>
+This project, for the Algorithms and Data Structures class implements and analyzes an **Abstract Data Type (ADT)** for RGB image processing, featuring advanced algorithms for image comparison, geometric transformations, and region-based segmentation.<br>
 The complete project report with detailed analysis, experimental results, and implementation details is available here: [**report**](./report.pdf)
 
 ## Authors
 - Inês Batista, 124877
 - Maria Quinteiro, 124996
-
-## Project Goals
-
-### Implementation
-- Complete the imageRGB ADT supporting image creation, copying, and destruction
-- Implement pixel manipulation using 2D array with LUT architecture
-- Support PBM (P4) and PPM (P3) file formats
-
-### Algorithm Development
-- Image comparison with early termination optimization
-- Geometric transformations (90° and 180° rotations)
-- Three Region Growing strategies using Flood Fill algorithm
-
-### Performance Analysis
-- Instrumentation via PIXMEM counter for memory access measurement
-- Empirical validation of computational complexity models
-- Comparative analysis of different algorithm strategies
-
 
 ## Key Algorithms
 
