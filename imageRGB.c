@@ -11,12 +11,12 @@
 /// 2025
 
 // Student authors (fill in below):
-// NMec: 124877
-// Name: Inês Batista
 // NMec: 124996
 // Name: Maria Quinteiro
+// NMec: 124877
+// Name: Inês Batista
 //
-// Date: 15/11/2025
+// Date: 11/11/2025
 //
 
 #include "imageRGB.h"
@@ -294,13 +294,13 @@ Image ImageCopy(const Image img) {
 
   Image copy = AllocateImageHeader(img->width, img->height);
 
-  // Copy LUT
+  // Copia LUT
   copy->num_colors = img->num_colors;
   for (uint16 i = 0; i < img->num_colors; i++) {
     copy->LUT[i] = img->LUT[i];
   }
 
-  // Copy rows
+  // Copia linhas
   for (uint32 i = 0; i < img->height; i++) {
     copy->image[i] = AllocateRowArray(img->width);
     for (uint32 j = 0; j < img->width; j++) {
@@ -709,31 +709,25 @@ int ImageIsValidPixel(const Image img, int u, int v) {
 /// Each function carries out a different version of the algorithm.
 
 /// Region growing using the recursive flood-filling algorithm.
-int ImageRegionFillingRecursive(Image img, int u, int v, uint16 label) {
-  assert(img != NULL);
-  assert(ImageIsValidPixel(img, u, v));
-
-  uint16 old = img->image[v][u];
-  if (old == label) return 0;
-
-  // Internal helper
-  int fill(Image img, int u, int v, uint16 old, uint16 label); {
+static int fill(Image img, int u, int v, uint16 old, uint16 label) {
+    // Read and check bounds
     if (!ImageIsValidPixel(img, u, v)) return 0;
+    PIXMEM++; // Assuming ImageIsValidPixel doesn't increment PIXMEM
+    
+    // Read pixel color
     if (img->image[v][u] != old) return 0;
-
+    PIXMEM++; // Actual read of the pixel array
+    
+    // Write new color
     img->image[v][u] = label;
-    PIXMEM += 2;
+    PIXMEM++; // Actual write of the pixel array
 
     return 1
       + fill(img, u+1, v, old, label)
       + fill(img, u-1, v, old, label)
       + fill(img, u, v+1, old, label)
       + fill(img, u, v-1, old, label);
-  }
-
-  return fill(img, u, v, old, label);
 }
-
 
 /// Region growing using a STACK of pixel coordinates to
 /// implement the flood-filling algorithm.

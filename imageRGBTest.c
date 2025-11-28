@@ -50,9 +50,9 @@ int main(int argc, char* argv[]) {
   Image image_3 = ImageCreatePalete(4*32, 4*32, 4);
   ImageSavePPM(image_3, "palete.ppm");
 
-
-
-  
+  // ============================================================
+  // ========== IMAGE ISEQUAL EXPERIMENTAL ANALYSIS =============
+  // ============================================================
 
   printf("\n============================\n");
   printf("9) ImageIsEqual – Experimental Analysis\n");
